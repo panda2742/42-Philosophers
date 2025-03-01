@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:34 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/01 11:43:15 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/01 13:10:45 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,8 @@
 
 # include <pthread.h>
 # include <stdio.h>
-
-# ifndef EXIT_SUCCESS
-#  define EXIT_SUCCESS 0
-# endif
-# ifndef EXIT_FAILURE
-#  define EXIT_FAILURE 1
-# endif
+# include <stdlib.h>
+# include <unistd.h>
 
 typedef struct s_philo
 {
