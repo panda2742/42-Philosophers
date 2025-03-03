@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/01 22:31:39 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/02 12:06:44 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	_init_philo(int argc, char **argv, t_philo_vars *pvars)
 	if (argc == 6)
 		pvars->nb_meals = ft_atoui(argv[5], &pvars->exit_status);
 	if (NULL == create_table(pvars))
-		return (NULL);
+		return ;
 }
 
 int	terminate(int *exit_status, int exit_status_to_set)
