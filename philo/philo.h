@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:34 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/02 16:24:46 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/03 15:18:40 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_philo_vars
 # define RESET "\x1b[0m"
 
 void			*routine(t_philo_vars *pvars);
-unsigned int	ft_atoui(const char *nptr, int *exit_code);
 t_philo			*create_philo(t_philo_vars *pvars, unsigned int id, t_philo *left, t_philo *right);
 t_pfork			*create_fork(t_philo_vars *pvars, t_philo *philo);
 t_philo			**create_table(t_philo_vars *pvars);

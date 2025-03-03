@@ -6,11 +6,23 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:40:07 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/02 19:55:00 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/03 16:50:52 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*routine(t_philo_vars *pvars)
+{
+	(void)pvars;
+	write(1, "Living\n", 8);
+	for (int i = 0; i < 1000000000 ; i++)
+	{
+		
+	}
+	write(1, "Dying\n", 7);
+	return (NULL);
+}
 
 t_philo	*create_philo(t_philo_vars *pvars, unsigned int id, t_philo *left_philo, t_philo *right_philo)
 {
@@ -35,7 +47,6 @@ t_philo	*create_philo(t_philo_vars *pvars, unsigned int id, t_philo *left_philo,
 	philo->fork = create_fork(pvars, philo);
 	if (NULL == philo->fork)
 		return (NULL);
-	pthread_join(philo->thread, NULL);
 	return (philo);
 }
 
@@ -65,6 +76,7 @@ t_philo	**create_table(t_philo_vars *pvars)
 {
 	t_philo			*left_philo;
 	t_philo			*right_philo;
+	t_philo			*philo;
 	unsigned int	i;
 
 	left_philo = create_philo(pvars, 1, NULL, NULL);
@@ -74,10 +86,10 @@ t_philo	**create_table(t_philo_vars *pvars)
 	right_philo = NULL;
 	printf("%p\n", *pvars->philos);
 	i = 1;
+	printf("nb philos: %d\n", pvars->nb_philo);
 	while (++i <= pvars->nb_philo)
 	{
 		right_philo = create_philo(pvars, i, left_philo, NULL);
-			return (NULL);
 		left_philo->right = right_philo;
 		if (NULL == right_philo)
 			return (NULL);

@@ -6,13 +6,14 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/02 12:06:44 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/03 15:17:13 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	_init_philo(int, char **, t_philo_vars *);
+static void			_init_philo(int, char **, t_philo_vars *);
+static unsigned int	_ft_atoui(const char *nptr, int *exit_code);
 
 int	main(int argc, char **argv)
 {
@@ -36,17 +37,17 @@ int	main(int argc, char **argv)
 static void	_init_philo(int argc, char **argv, t_philo_vars *pvars)
 {
 	pvars->exit_status = EXIT_SUCCESS;
-	pvars->nb_philo = ft_atoui(argv[1], &pvars->exit_status);
-	pvars->t_die = ft_atoui(argv[2], &pvars->exit_status);
-	pvars->t_eat = ft_atoui(argv[3], &pvars->exit_status);
-	pvars->t_sleep = ft_atoui(argv[4], &pvars->exit_status);
+	pvars->nb_philo = _ft_atoui(argv[1], &pvars->exit_status);
+	pvars->t_die = _ft_atoui(argv[2], &pvars->exit_status);
+	pvars->t_eat = _ft_atoui(argv[3], &pvars->exit_status);
+	pvars->t_sleep = _ft_atoui(argv[4], &pvars->exit_status);
 	pvars->infinite_meals = 1;
 	pvars->nb_meals = 0;
 	pvars->philos = NULL;
 	if (argc == 6)
 		pvars->infinite_meals = 0;
 	if (argc == 6)
-		pvars->nb_meals = ft_atoui(argv[5], &pvars->exit_status);
+		pvars->nb_meals = _ft_atoui(argv[5], &pvars->exit_status);
 	if (NULL == create_table(pvars))
 		return ;
 }
@@ -55,4 +56,29 @@ int	terminate(int *exit_status, int exit_status_to_set)
 {
 	*exit_status = exit_status_to_set;
 	return (*exit_status);
+}
+
+static unsigned int	_ft_atoui(const char *nptr, int *exit_code)
+{
+	int	res;
+
+	res = 0;
+	while (*nptr && *nptr < 32)
+		nptr++;
+	while (*nptr)
+	{
+		if (*nptr <= '0' || *nptr >= '9')
+		{
+			*exit_code = EXIT_FAILURE;
+			break ;
+		}
+		if ((res * 10 + *nptr - '0') / 10 != res)
+		{
+			*exit_code = EXIT_FAILURE;
+			break ;
+		}
+		res = res * 10 + *nptr - '0';
+		nptr++;
+	}
+	return (res);
 }

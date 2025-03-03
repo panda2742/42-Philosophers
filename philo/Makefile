@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/01 22:14:23 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/03 15:17:22 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ override	DEPS	:=	$(patsubst %.o,%.d,$(OBJ))
 
 override	BUILD_DIR	:=	$(MAKE_DIR)$(shell git branch --show-current)_philo/
 override	SRC_DIR		:=
-override	SRCS		:=	main philo routine tools
+override	SRCS		:=	main philo
 override	SRC			:=	$(addprefix $(SRC_DIR),$(addsuffix .c,$(SRCS)))
 override	OBJ			:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.o,$(SRC))
 override	ASM_OBJ		:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.s,$(SRC))
