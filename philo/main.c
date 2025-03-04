@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/03 15:17:13 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/04 09:41:26 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int	main(int argc, char **argv)
 {
 	t_philo_vars	pvars;
 
-	if (5 != argc && 6 != argc)
+	if (argc != 5 && argc != 6)
 	{
 		printf(RED "Error.\n  4 or 5 arguments are expected:\n");
 		printf("  ./philo nb_philo t_die t_eat t_sleep [nb_meals]\n" RESET);
 		return (EXIT_FAILURE);
 	}
 	_init_philo(argc, argv, &pvars);
-	if (EXIT_FAILURE == pvars.exit_status)
+	if (pvars.exit_status == EXIT_FAILURE)
 	{
-		printf(RED "Error.\n  Unsigned int are expected.\n" RESET);
+		printf(RED "Error.\n  Errors occured.\n" RESET);
 		return (EXIT_FAILURE);
 	}
 	return (pvars.exit_status);
@@ -48,7 +48,7 @@ static void	_init_philo(int argc, char **argv, t_philo_vars *pvars)
 		pvars->infinite_meals = 0;
 	if (argc == 6)
 		pvars->nb_meals = _ft_atoui(argv[5], &pvars->exit_status);
-	if (NULL == create_table(pvars))
+	if (create_table(pvars) == NULL)
 		return ;
 }
 

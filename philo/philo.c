@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:40:07 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/03 16:50:52 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/04 09:40:53 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ t_philo	*create_philo(t_philo_vars *pvars, unsigned int id, t_philo *left_philo,
 	t_philo	*philo;
 	
 	philo = malloc(sizeof(t_philo));
-	if (NULL == philo)
+	if (philo == NULL)
 	{
 		pvars->exit_status = EXIT_FAILURE;
 		printf(RED "Error.\n  Memory allocation failed.\n" RESET);
 		return (NULL);
 	}
-	if (0 != pthread_create(&philo->thread, NULL, (void *(*)(void *))&routine, (void *)pvars))
+	if (pthread_create(&philo->thread, NULL, (void *(*)(void *))&routine, (void *)pvars) != 0)
 	{
 		pvars->exit_status = EXIT_FAILURE;
 		printf(RED "Error.\n  Thread (on philosopher) creation failed.\n" RESET);
@@ -45,7 +45,7 @@ t_philo	*create_philo(t_philo_vars *pvars, unsigned int id, t_philo *left_philo,
 	philo->left = left_philo;
 	philo->right = right_philo;
 	philo->fork = create_fork(pvars, philo);
-	if (NULL == philo->fork)
+	if (philo->fork == NULL)
 		return (NULL);
 	return (philo);
 }
@@ -55,13 +55,13 @@ t_pfork	*create_fork(t_philo_vars *pvars, t_philo *philo)
 	t_pfork	*fork;
 
 	fork = malloc(sizeof(t_pfork));
-	if (NULL == fork)
+	if (fork == NULL)
 	{
 		pvars->exit_status = EXIT_FAILURE;
 		printf(RED "Error.\n  Memory allocation failed.\n" RESET);
 		return (NULL);
 	}
-	if (0 != pthread_mutex_init(&fork->mutex, NULL))
+	if (pthread_mutex_init(&fork->mutex, NULL) != 0)
 	{
 		pvars->exit_status = EXIT_FAILURE;
 		printf(RED "Error.\n  Mutex (on fork) creation failed.\n" RESET);
@@ -80,7 +80,7 @@ t_philo	**create_table(t_philo_vars *pvars)
 	unsigned int	i;
 
 	left_philo = create_philo(pvars, 1, NULL, NULL);
-	if (NULL == left_philo)
+	if (left_philo != 0)
 		return (NULL);
 	pvars->philos = &left_philo;
 	right_philo = NULL;
@@ -91,9 +91,17 @@ t_philo	**create_table(t_philo_vars *pvars)
 	{
 		right_philo = create_philo(pvars, i, left_philo, NULL);
 		left_philo->right = right_philo;
-		if (NULL == right_philo)
+		if (right_philo == NULL)
 			return (NULL);
 		left_philo = right_philo;
+	}
+	philo = *pvars->philos;
+	printf("philo %p\n", philo);
+	philo = philo->right;
+	while (philo)
+	{
+		printf("philo %p\n", philo);
+		philo = philo->right;
 	}
 	return (pvars->philos);
 }
