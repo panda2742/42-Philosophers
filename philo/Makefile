@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/03 15:17:22 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/04 16:53:57 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ MAKE_DIR			:=	.make/
 override	DEPS	:=	$(patsubst %.o,%.d,$(OBJ))
 
 override	BUILD_DIR	:=	$(MAKE_DIR)$(shell git branch --show-current)_philo/
-override	SRC_DIR		:=
-override	SRCS		:=	main philo
+override	SRC_DIR		:=	src/
+override	SRCS		:=	main table
 override	SRC			:=	$(addprefix $(SRC_DIR),$(addsuffix .c,$(SRCS)))
 override	OBJ			:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.o,$(SRC))
 override	ASM_OBJ		:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.s,$(SRC))
@@ -67,11 +67,10 @@ norm:
 
 .PHONY: compile
 compile:
-	$(MAKE) all
-	@$(MAKE) clean
+	@$(MAKE) all > /dev/null
 
 .PHONY: run
-run:	compile
-	./$(NAME)
+run: compile
+	./$(NAME) 5 800 200 200
 
 -include $(DEPS)

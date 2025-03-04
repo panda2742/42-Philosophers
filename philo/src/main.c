@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/04 09:41:26 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/04 13:27:05 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,18 @@ static void	_init_philo(int argc, char **argv, t_philo_vars *pvars)
 {
 	pvars->exit_status = EXIT_SUCCESS;
 	pvars->nb_philo = _ft_atoui(argv[1], &pvars->exit_status);
+	pvars->exit_status = EXIT_SUCCESS;
 	pvars->t_die = _ft_atoui(argv[2], &pvars->exit_status);
+	pvars->exit_status = EXIT_SUCCESS;
 	pvars->t_eat = _ft_atoui(argv[3], &pvars->exit_status);
 	pvars->t_sleep = _ft_atoui(argv[4], &pvars->exit_status);
-	pvars->infinite_meals = 1;
 	pvars->nb_meals = 0;
 	pvars->philos = NULL;
 	if (argc == 6)
+	{
 		pvars->infinite_meals = 0;
-	if (argc == 6)
 		pvars->nb_meals = _ft_atoui(argv[5], &pvars->exit_status);
+	}
 	if (create_table(pvars) == NULL)
 		return ;
 }
@@ -67,7 +69,7 @@ static unsigned int	_ft_atoui(const char *nptr, int *exit_code)
 		nptr++;
 	while (*nptr)
 	{
-		if (*nptr <= '0' || *nptr >= '9')
+		if (*nptr < '0' || *nptr > '9')
 		{
 			*exit_code = EXIT_FAILURE;
 			break ;
