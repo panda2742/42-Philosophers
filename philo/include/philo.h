@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:34 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/04 13:55:32 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/05 12:42:45 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,32 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+# define RED "\x1b[31m"
+# define GREEN "\x1b[32m"
+# define YELLOW "\x1b[33m"
+# define BLUE "\x1b[34m"
+# define MAGENTA "\x1b[35m"
+# define CYAN "\x1b[36m"
+# define RESET "\x1b[0m"
+# define GRAY "\x1b[37m"
+
+# define SPAWNING_COLOR GREEN
+# define FORK_TAKEN_COLOR YELLOW
+# define EATING_COLOR MAGENTA
+# define SLEEPING_COLOR BLUE
+# define THINKING_COLOR CYAN
+# define DEAD_COLOR RED
+
+typedef enum e_state
+{
+	SPWANING,
+	FORK_TAKEN,
+	EATING,
+	SLEEPING,
+	THINKING,
+	DEAD
+}	t_state;
 
 typedef unsigned char t_bool;
 
@@ -33,6 +59,13 @@ typedef struct s_philo
 	t_pfork			*r_fork;
 }					t_philo;
 
+typedef struct s_routine_args
+{
+	struct s_philo_vars	*pvars;
+	t_philo				*philo;
+	unsigned int		id;
+}						t_routine_args;
+
 typedef struct s_philo_vars
 {
 	unsigned int	nb_philo;
@@ -44,18 +77,16 @@ typedef struct s_philo_vars
 	int				exit_status;
 	t_philo			*philos;
 	t_pfork			*forks;
+	t_routine_args	*args;
 }		t_philo_vars;
 
-typedef struct s_routine_args
-{
-	t_philo_vars	*pvars;
-	t_philo			*philo;
-}					t_routine_args;
 
 # define RED "\x1b[31m"
 # define RESET "\x1b[0m"
 
-void			*routine(t_philo_vars *pvars);
-t_philo			*create_table(t_philo_vars *pvars);
+t_philo	*create_table(t_philo_vars *pvars);
+t_philo	*create_threads(t_philo_vars *pvars);
+void	*ret_malloc_error(t_philo_vars *pvars);
+void	display_state(t_routine_args *args, unsigned long long ts, t_state state);
 
 #endif

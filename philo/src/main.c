@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/04 13:27:05 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/05 10:21:48 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	_init_philo(int argc, char **argv, t_philo_vars *pvars)
 	}
 	if (create_table(pvars) == NULL)
 		return ;
+	create_threads(pvars);
 }
 
 int	terminate(int *exit_status, int exit_status_to_set)

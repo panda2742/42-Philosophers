@@ -6,44 +6,28 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:40:07 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/04 16:53:00 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/05 12:46:45 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*routine(t_philo_vars *pvars)
-{
-	(void)pvars;
-	write(1, "Living\n", 8);
-	for (int i = 0; i < 1000000000 ; i++)
-	{
-		
-	}
-	write(1, "Dying\n", 7);
-	return (NULL);
-}
+static void	*_routine(t_routine_args *args);
 
 t_philo	*create_table(t_philo_vars *pvars)
 {
 	unsigned int	i;
 	unsigned int	j;
-	t_philo			philo;
 
 	pvars->philos = malloc(sizeof(t_philo) * pvars->nb_philo);
 	if (pvars->philos == NULL)
-	{
-		pvars->exit_status = EXIT_FAILURE;
-		printf(RED "Error.\n  Memory allocation failed.\n" RESET);
-		return (NULL);
-	}
+		return (ret_malloc_error(pvars));
 	pvars->forks = malloc(sizeof(t_pfork) * pvars->nb_philo);
 	if (pvars->forks == NULL)
-	{
-		pvars->exit_status = EXIT_FAILURE;
-		printf(RED "Error.\n  Memory allocation failed.\n" RESET);
-		return (NULL);
-	}
+		return (ret_malloc_error(pvars));
+	pvars->args = malloc(sizeof(t_routine_args) * pvars->nb_philo);
+	if (pvars->forks == NULL)
+		return (ret_malloc_error(pvars));
 	i = -1;
 	while (++i < pvars->nb_philo)
 	{
@@ -53,12 +37,39 @@ t_philo	*create_table(t_philo_vars *pvars)
 		pvars->philos[i].r_fork = &pvars->forks[i];
 		pvars->philos[j].l_fork = &pvars->forks[i];
 		pvars->forks[i].is_being_used = 0;
+		pvars->args[i].id = i;
 	}
+	return (&pvars->philos[0]);
+}
+
+t_philo	*create_threads(t_philo_vars *pvars)
+{
+	unsigned int	i;
+
 	i = -1;
 	while (++i < pvars->nb_philo)
 	{
-		philo = pvars->philos[i];
-		printf("%p <- [%d] %p ->\n", philo.l_fork, i, philo, philo.r_fork);
+		pthread_mutex_init(&pvars->forks[i].mutex, NULL);
+		pvars->args[i].philo = &pvars->philos[i];
+		pvars->args[i].pvars = pvars;
+		pthread_create(
+			&pvars->philos[i].thread, NULL,
+			(void *(*)(void *))_routine, (void *)&pvars->args[i]);
 	}
-	return (&pvars->philos[0]);
+	i = -1;
+	while (++i < pvars->nb_philo)
+		pthread_join(pvars->philos[i].thread, NULL);
+	return (NULL);
+}
+
+static void	*_routine(t_routine_args *args)
+{
+	display_state(args, 0, SPWANING);
+	display_state(args, 0, FORK_TAKEN);
+	display_state(args, 0, EATING);
+	display_state(args, 0, SLEEPING);
+	display_state(args, 0, THINKING);
+	sleep(4);
+	display_state(args, 0, DEAD);
+	return (NULL);
 }

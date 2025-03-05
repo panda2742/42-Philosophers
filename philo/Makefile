@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/04 16:53:57 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/05 12:27:34 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ override	DEPS	:=	$(patsubst %.o,%.d,$(OBJ))
 
 override	BUILD_DIR	:=	$(MAKE_DIR)$(shell git branch --show-current)_philo/
 override	SRC_DIR		:=	src/
-override	SRCS		:=	main table
+override	SRCS		:=	main table err out
 override	SRC			:=	$(addprefix $(SRC_DIR),$(addsuffix .c,$(SRCS)))
 override	OBJ			:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.o,$(SRC))
 override	ASM_OBJ		:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.s,$(SRC))
@@ -33,11 +33,11 @@ override	RM		:=	rm
 .PHONY: all
 all:	$(NAME)
 
-$(NAME): $(OBJ) philo.h Makefile
+$(NAME): $(OBJ) include/philo.h Makefile
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c | $(DIRS)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -Iinclude/ -c $< -o $@
 
 .PHONY: asm
 asm: $(ASM_OBJ) $(OBJ) philo.h Makefile
