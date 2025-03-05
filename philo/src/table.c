@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:40:07 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/05 12:46:45 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/05 16:42:57 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,59 @@ t_philo	*create_threads(t_philo_vars *pvars)
 
 static void	*_routine(t_routine_args *args)
 {
-	display_state(args, 0, SPWANING);
-	display_state(args, 0, FORK_TAKEN);
-	display_state(args, 0, EATING);
-	display_state(args, 0, SLEEPING);
-	display_state(args, 0, THINKING);
-	sleep(4);
+	t_bool		is_alive;
+	t_pfork		*l_fork;
+	t_pfork		*r_fork;
+	long long	i;
+
+	display_state(args, 0, SPAWNING);
+	is_alive = 1;
+	l_fork = args->philo->l_fork;
+	r_fork = args->philo->r_fork;
+	while (is_alive)
+	{
+		i++;
+		pthread_mutex_lock(&l_fork->mutex);
+		pthread_mutex_lock(&r_fork->mutex);
+		if (l_fork->is_being_used == 0 && r_fork->is_being_used == 0 && l_fork != r_fork)
+		{
+			display_state(args, 0, FORK_TAKEN);
+			l_fork->is_being_used = 1;
+			pthread_mutex_unlock(&l_fork->mutex);
+			display_state(args, 0, EATING);
+			r_fork->is_being_used = 1;
+			pthread_mutex_unlock(&r_fork->mutex);
+
+			sleep(2);
+
+			pthread_mutex_lock(&l_fork->mutex);
+			l_fork->is_being_used = 0;
+			pthread_mutex_unlock(&l_fork->mutex);
+
+			pthread_mutex_lock(&r_fork->mutex);
+			r_fork->is_being_used = 0;
+			display_state(args, 0, THINKING);
+			pthread_mutex_unlock(&r_fork->mutex);
+
+			sleep(1);
+
+			display_state(args, 0, SLEEPING);
+			i = 0;
+		}
+		else
+		{
+			pthread_mutex_unlock(&l_fork->mutex);
+			pthread_mutex_unlock(&r_fork->mutex);
+		}
+		if (i >= 2000000000)
+			break ;
+	}
 	display_state(args, 0, DEAD);
 	return (NULL);
+}
+
+long long	date_now()
+{
+	timeval	t_philo_vars;
+	gettimeofday(DST_WET)
 }

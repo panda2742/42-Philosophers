@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:05:02 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/05 12:51:45 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/05 15:05:54 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*_get_color(t_state state);
 
 void	display_state(t_routine_args *args, unsigned long long ts, t_state state)
 {
-	if (state == SPWANING)
+	if (state == SPAWNING)
 		printf("%s%llu %d is born%s\n", _get_color(state), ts, args->id, RESET);
 	if (state == FORK_TAKEN)
 		printf("%s%llu %d has taken a fork%s\n", _get_color(state), ts, args->id, RESET);
@@ -32,7 +32,7 @@ void	display_state(t_routine_args *args, unsigned long long ts, t_state state)
 
 static char	*_get_color(t_state state)
 {
-	if (state == SPWANING)
+	if (state == SPAWNING)
 		return (SPAWNING_COLOR);
 	if (state == FORK_TAKEN)
 		return (FORK_TAKEN_COLOR);

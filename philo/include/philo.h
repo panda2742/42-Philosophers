@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:34 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/05 12:42:45 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/05 16:29:43 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <sys/time.h>
 
 # define RED "\x1b[31m"
 # define GREEN "\x1b[32m"
@@ -36,7 +37,7 @@
 
 typedef enum e_state
 {
-	SPWANING,
+	SPAWNING,
 	FORK_TAKEN,
 	EATING,
 	SLEEPING,

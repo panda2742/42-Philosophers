@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/05 12:27:34 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/05 16:39:36 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,6 @@ compile:
 
 .PHONY: run
 run: compile
-	./$(NAME) 5 800 200 200
+	./$(NAME) 1 800 200 200
 
 -include $(DEPS)
