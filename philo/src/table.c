@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:40:07 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/05 16:42:57 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/05 21:41:19 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,56 +67,25 @@ static void	*_routine(t_routine_args *args)
 	t_bool		is_alive;
 	t_pfork		*l_fork;
 	t_pfork		*r_fork;
-	long long	i;
+	t_bool		is_eating;
 
-	display_state(args, 0, SPAWNING);
-	is_alive = 1;
 	l_fork = args->philo->l_fork;
 	r_fork = args->philo->r_fork;
+	is_alive = 1;
+	display_state(args, 0, SPAWNING);
 	while (is_alive)
 	{
-		i++;
-		pthread_mutex_lock(&l_fork->mutex);
-		pthread_mutex_lock(&r_fork->mutex);
-		if (l_fork->is_being_used == 0 && r_fork->is_being_used == 0 && l_fork != r_fork)
-		{
-			display_state(args, 0, FORK_TAKEN);
-			l_fork->is_being_used = 1;
-			pthread_mutex_unlock(&l_fork->mutex);
-			display_state(args, 0, EATING);
-			r_fork->is_being_used = 1;
-			pthread_mutex_unlock(&r_fork->mutex);
-
-			sleep(2);
-
-			pthread_mutex_lock(&l_fork->mutex);
-			l_fork->is_being_used = 0;
-			pthread_mutex_unlock(&l_fork->mutex);
-
-			pthread_mutex_lock(&r_fork->mutex);
-			r_fork->is_being_used = 0;
-			display_state(args, 0, THINKING);
-			pthread_mutex_unlock(&r_fork->mutex);
-
-			sleep(1);
-
-			display_state(args, 0, SLEEPING);
-			i = 0;
-		}
-		else
-		{
-			pthread_mutex_unlock(&l_fork->mutex);
-			pthread_mutex_unlock(&r_fork->mutex);
-		}
-		if (i >= 2000000000)
-			break ;
+		args->ts = date_now();
+		usleep(500);
 	}
-	display_state(args, 0, DEAD);
+	display_state(args, args->ts / 1000, DEAD);
 	return (NULL);
 }
 
-long long	date_now()
+t_timestamp	date_now(void)
 {
-	timeval	t_philo_vars;
-	gettimeofday(DST_WET)
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000) + tv.tv_usec;
 }

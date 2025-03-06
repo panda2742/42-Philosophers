@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:34 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/05 16:29:43 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/05 21:35:22 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define CYAN "\x1b[36m"
 # define RESET "\x1b[0m"
 # define GRAY "\x1b[37m"
+# define RESET "\x1b[0m"
 
 # define SPAWNING_COLOR GREEN
 # define FORK_TAKEN_COLOR YELLOW
@@ -46,6 +47,7 @@ typedef enum e_state
 }	t_state;
 
 typedef unsigned char t_bool;
+typedef long long t_timestamp;
 
 typedef struct s_pfork
 {
@@ -55,9 +57,9 @@ typedef struct s_pfork
 
 typedef struct s_philo
 {
-	pthread_t		thread;
-	t_pfork			*l_fork;
-	t_pfork			*r_fork;
+	pthread_t	thread;
+	t_pfork		*l_fork;
+	t_pfork		*r_fork;
 }					t_philo;
 
 typedef struct s_routine_args
@@ -65,6 +67,7 @@ typedef struct s_routine_args
 	struct s_philo_vars	*pvars;
 	t_philo				*philo;
 	unsigned int		id;
+	t_timestamp			ts;
 }						t_routine_args;
 
 typedef struct s_philo_vars
@@ -81,13 +84,12 @@ typedef struct s_philo_vars
 	t_routine_args	*args;
 }		t_philo_vars;
 
-
-# define RED "\x1b[31m"
-# define RESET "\x1b[0m"
-
-t_philo	*create_table(t_philo_vars *pvars);
-t_philo	*create_threads(t_philo_vars *pvars);
-void	*ret_malloc_error(t_philo_vars *pvars);
-void	display_state(t_routine_args *args, unsigned long long ts, t_state state);
+t_philo		*create_table(t_philo_vars *pvars);
+t_philo		*create_threads(t_philo_vars *pvars);
+void		*ret_malloc_error(t_philo_vars *pvars);
+void		display_state(t_routine_args *args, unsigned long long ts, t_state state);
+long long	date_now(void);
+void		lock_forks(t_pfork *l_fork, t_pfork *r_fork);
+void		unlock_forks(t_pfork *l_fork, t_pfork *r_fork);
 
 #endif
