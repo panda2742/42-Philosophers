@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/06 15:53:17 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/06 16:20:19 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,14 @@ override	DEPS	:=	$(patsubst %.o,%.d,$(OBJ))
 
 override	BUILD_DIR	:=	$(MAKE_DIR)$(shell git branch --show-current)_philo/
 override	SRC_DIR		:=	src/
-override	SRCS		:=	life main out table time tools
+override	SRCS		:=	clear_table life main table tools
 override	SRC			:=	$(addprefix $(SRC_DIR),$(addsuffix .c,$(SRCS)))
 override	OBJ			:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.o,$(SRC))
 override	ASM_OBJ		:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.s,$(SRC))
 
 override	DIRS	:=	$(sort $(dir $(NAME) $(OBJ) $(DEPS)))
 
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pthread
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pthread -g3
 ASMFLAGS	:=	$(CFLAGS) -S
 MAKEFLAGS	:=	--no-print-directory
 RMFLAGS		:=	-rf

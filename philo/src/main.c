@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/06 16:04:53 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/06 16:19:16 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static void	_init_philo(int argc, char **argv, t_philo_vars *pvars)
 	pvars->nb_meals = 0;
 	pvars->infinite_meals = 1;
 	pvars->philos = NULL;
+	pvars->forks = NULL;
+	pvars->args = NULL;
 	pvars->a_philo_is_dead = 0;
 	gettimeofday(&pvars->sim_ts, NULL);
 	pthread_mutex_init(&pvars->dead_mutex, NULL);

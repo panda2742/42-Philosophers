@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:40:07 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/06 15:59:41 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/06 16:21:58 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_philo	*create_threads(t_philo_vars *pvars)
 	i = -1;
 	while (++i < pvars->nb_philo)
 		pthread_join(pvars->philos[i].thread, NULL);
+	clear_the_table(pvars);
 	return (NULL);
 }
 
@@ -68,6 +69,7 @@ static void	*_routine(t_routine_args *args)
 	t_philo	*philo;
 
 	philo = args->philo;
+	gettimeofday(&args->ts, NULL);
 	gettimeofday(&philo->last_meal_ts, NULL);
 	philo->state = THINKING;
 	display_state(args, START_THINKING);

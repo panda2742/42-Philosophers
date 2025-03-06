@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:34 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/06 16:02:39 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/06 16:17:20 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,6 @@ void		philo_eats(t_routine_args *args, t_philo *philo);
 void		philo_sleeps(t_routine_args *args, t_philo *philo);
 void		philo_dies(t_routine_args *args);
 t_bool		comrade_is_dead(t_routine_args *args);
+void		clear_the_table(t_philo_vars *pvars);
 
 #endif
