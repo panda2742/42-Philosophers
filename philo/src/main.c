@@ -6,13 +6,13 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/05 10:21:48 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/06 16:04:53 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void			_init_philo(int, char **, t_philo_vars *);
+static void			_init_philo(int argc, char **argv, t_philo_vars *pvars);
 static unsigned int	_ft_atoui(const char *nptr, int *exit_code);
 
 int	main(int argc, char **argv)
@@ -44,7 +44,11 @@ static void	_init_philo(int argc, char **argv, t_philo_vars *pvars)
 	pvars->t_eat = _ft_atoui(argv[3], &pvars->exit_status);
 	pvars->t_sleep = _ft_atoui(argv[4], &pvars->exit_status);
 	pvars->nb_meals = 0;
+	pvars->infinite_meals = 1;
 	pvars->philos = NULL;
+	pvars->a_philo_is_dead = 0;
+	gettimeofday(&pvars->sim_ts, NULL);
+	pthread_mutex_init(&pvars->dead_mutex, NULL);
 	if (argc == 6)
 	{
 		pvars->infinite_meals = 0;

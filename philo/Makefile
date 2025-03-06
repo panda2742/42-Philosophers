@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/05 16:39:36 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/06 15:53:17 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ override	DEPS	:=	$(patsubst %.o,%.d,$(OBJ))
 
 override	BUILD_DIR	:=	$(MAKE_DIR)$(shell git branch --show-current)_philo/
 override	SRC_DIR		:=	src/
-override	SRCS		:=	main table err out
+override	SRCS		:=	life main out table time tools
 override	SRC			:=	$(addprefix $(SRC_DIR),$(addsuffix .c,$(SRCS)))
 override	OBJ			:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.o,$(SRC))
 override	ASM_OBJ		:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.s,$(SRC))
@@ -71,6 +71,6 @@ compile:
 
 .PHONY: run
 run: compile
-	./$(NAME) 1 800 200 200
+	./$(NAME) 3 2000 200 200 2
 
 -include $(DEPS)

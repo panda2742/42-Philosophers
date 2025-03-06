@@ -6,13 +6,14 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 21:40:07 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/05 21:41:19 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/06 15:59:41 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	*_routine(t_routine_args *args);
+static void		*_routine(t_routine_args *args);
+static t_bool	_everyone_ate(t_routine_args *args);
 
 t_philo	*create_table(t_philo_vars *pvars)
 {
@@ -64,28 +65,41 @@ t_philo	*create_threads(t_philo_vars *pvars)
 
 static void	*_routine(t_routine_args *args)
 {
-	t_bool		is_alive;
-	t_pfork		*l_fork;
-	t_pfork		*r_fork;
-	t_bool		is_eating;
+	t_philo	*philo;
 
-	l_fork = args->philo->l_fork;
-	r_fork = args->philo->r_fork;
-	is_alive = 1;
-	display_state(args, 0, SPAWNING);
-	while (is_alive)
+	philo = args->philo;
+	gettimeofday(&philo->last_meal_ts, NULL);
+	philo->state = THINKING;
+	display_state(args, START_THINKING);
+	while (!_everyone_ate(args))
 	{
-		args->ts = date_now();
+		gettimeofday(&args->ts, NULL);
+		if (comrade_is_dead(args))
+			break ;
+		if (get_tv_diff(args->ts, philo->last_meal_ts) >= args->pvars->t_die)
+			philo_dies(args);
+		else if (philo->state == THINKING)
+			philo_thinks(args, philo);
+		else if (philo->state == EATING)
+			philo_eats(args, philo);
+		else if (philo->state == SLEEPING)
+			philo_sleeps(args, philo);
 		usleep(500);
 	}
-	display_state(args, args->ts / 1000, DEAD);
 	return (NULL);
 }
 
-t_timestamp	date_now(void)
+static t_bool	_everyone_ate(t_routine_args *args)
 {
-	struct timeval	tv;
+	unsigned int	i;
 
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000000) + tv.tv_usec;
+	if (args->pvars->infinite_meals)
+		return (0);
+	i = -1;
+	while (++i < args->pvars->nb_philo)
+	{
+		if (args->pvars->philos[i].meals < args->pvars->nb_meals)
+			return (0);
+	}
+	return (1);
 }

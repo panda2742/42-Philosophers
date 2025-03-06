@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:34 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/05 21:35:22 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/06 16:02:39 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,32 @@
 # define RESET "\x1b[0m"
 # define GRAY "\x1b[37m"
 # define RESET "\x1b[0m"
-
-# define SPAWNING_COLOR GREEN
-# define FORK_TAKEN_COLOR YELLOW
+# define FORK_COLOR YELLOW
 # define EATING_COLOR MAGENTA
 # define SLEEPING_COLOR BLUE
 # define THINKING_COLOR CYAN
 # define DEAD_COLOR RED
 
+typedef unsigned char		t_bool;
+typedef unsigned int		t_id;
+typedef unsigned long long	t_meals;
+typedef struct timeval		t_timestamp;
+
 typedef enum e_state
 {
-	SPAWNING,
-	FORK_TAKEN,
 	EATING,
 	SLEEPING,
 	THINKING,
-	DEAD
 }	t_state;
 
-typedef unsigned char t_bool;
-typedef long long t_timestamp;
+typedef enum e_move_ref
+{
+	TAKING_FORK,
+	START_EATING,
+	START_SLEEPING,
+	START_THINKING,
+	DYING,
+}	t_move_ref;
 
 typedef struct s_pfork
 {
@@ -60,36 +66,47 @@ typedef struct s_philo
 	pthread_t	thread;
 	t_pfork		*l_fork;
 	t_pfork		*r_fork;
+	t_meals		meals;
+	t_state		state;
+	t_timestamp	last_meal_ts;
+	t_timestamp	state_since;
 }					t_philo;
 
 typedef struct s_routine_args
 {
 	struct s_philo_vars	*pvars;
 	t_philo				*philo;
-	unsigned int		id;
+	t_id				id;
 	t_timestamp			ts;
 }						t_routine_args;
 
 typedef struct s_philo_vars
 {
+	int				exit_status;
 	unsigned int	nb_philo;
 	unsigned int	t_die;
 	unsigned int	t_eat;
 	unsigned int	t_sleep;
 	unsigned int	nb_meals;
 	t_bool			infinite_meals;
-	int				exit_status;
 	t_philo			*philos;
 	t_pfork			*forks;
 	t_routine_args	*args;
+	t_timestamp		sim_ts;
+	t_bool			a_philo_is_dead;
+	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	write;
 }		t_philo_vars;
 
 t_philo		*create_table(t_philo_vars *pvars);
 t_philo		*create_threads(t_philo_vars *pvars);
 void		*ret_malloc_error(t_philo_vars *pvars);
-void		display_state(t_routine_args *args, unsigned long long ts, t_state state);
-long long	date_now(void);
-void		lock_forks(t_pfork *l_fork, t_pfork *r_fork);
-void		unlock_forks(t_pfork *l_fork, t_pfork *r_fork);
+long long	get_tv_diff(t_timestamp tv1, t_timestamp tv2);
+void		display_state(t_routine_args *args, t_move_ref move_ref);
+void		philo_thinks(t_routine_args *args, t_philo *philo);
+void		philo_eats(t_routine_args *args, t_philo *philo);
+void		philo_sleeps(t_routine_args *args, t_philo *philo);
+void		philo_dies(t_routine_args *args);
+t_bool		comrade_is_dead(t_routine_args *args);
 
 #endif

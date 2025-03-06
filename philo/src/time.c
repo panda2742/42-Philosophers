@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutex.c                                            :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/05 19:27:52 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/05 19:30:48 by ehosta           ###   ########.fr       */
+/*   Created: 2025/03/06 14:05:20 by ehosta            #+#    #+#             */
+/*   Updated: 2025/03/06 16:01:16 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	lock_forks(t_pfork *l_fork, t_pfork *r_fork)
+long long	get_tv_diff(t_timestamp tv1, t_timestamp tv2)
 {
-	pthread_mutex_lock(&l_fork->mutex);
-	pthread_mutex_lock(&r_fork->mutex);
-}
+	long long	secs;
+	long long	usecs;
+	long long	res;
 
-void	unlock_forks(t_pfork *l_fork, t_pfork *r_fork)
-{
-	pthread_mutex_unlock(&l_fork->mutex);
-	pthread_mutex_unlock(&r_fork->mutex);
+	if (tv1.tv_sec == 0)
+		gettimeofday(&tv1, NULL);
+	if (tv2.tv_sec == 0)
+		gettimeofday(&tv2, NULL);
+	secs = tv1.tv_sec - tv2.tv_sec;
+	usecs = tv1.tv_usec - tv2.tv_usec;
+	res = secs * 1000 + usecs / 1000;
+	return (res);
 }
