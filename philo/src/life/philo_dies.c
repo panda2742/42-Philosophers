@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_table.c                                      :+:      :+:    :+:   */
+/*   philo_dies.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 16:04:23 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 16:18:16 by ehosta           ###   ########.fr       */
+/*   Created: 2025/03/10 16:01:30 by ehosta            #+#    #+#             */
+/*   Updated: 2025/03/10 16:36:07 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	clear_table(t_philo_vars *pvars)
+void	philo_dies(t_routine_args *args)
 {
-	unsigned int	i;
-
-	i = -1;
-	while (++i < pvars->nb_philo)
-	{
-		pthread_mutex_destroy(&pvars->forks[i].mutex);
-		if (pvars->philos[i].roman)
-			free(pvars->philos[i].roman);
-	}
+	pthread_mutex_lock(&args->pvars->a_philo_is_dead.mutex);
+	pthread_mutex_lock(&args->philo->is_alive.mutex);
+	args->philo->state = DYING;
+	args->philo->state_since = args->ts;
+	display_state(args);
+	args->pvars->a_philo_is_dead.val = 1;
+	args->philo->is_alive.val = 0;
+	pthread_mutex_unlock(&args->pvars->a_philo_is_dead.mutex);
+	pthread_mutex_unlock(&args->philo->is_alive.mutex);
 }

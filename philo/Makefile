@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/07 11:06:59 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/10 17:10:39 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,20 @@ override	DEPS	:=	$(patsubst %.o,%.d,$(OBJ))
 
 override	BUILD_DIR	:=	$(MAKE_DIR)$(shell git branch --show-current)_philo/
 override	SRC_DIR		:=	src/
-override	SRCS		:=	clear_table life main table tools
+override	SRCS		:=	life/philo_dies life/philo_eats life/philo_sleeps \
+							life/philo_thinks locale/en locale/fr \
+							locale/int_to_roman locale/names out/display_state \
+							tools/ft_atoui tools/get_tv_diff clear_table \
+							create_table main routine
 override	SRC			:=	$(addprefix $(SRC_DIR),$(addsuffix .c,$(SRCS)))
 override	OBJ			:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.o,$(SRC))
 override	ASM_OBJ		:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.s,$(SRC))
 
 override	DIRS	:=	$(sort $(dir $(NAME) $(OBJ) $(DEPS)))
 
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pthread -g3
+LOCALE=0
+
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pthread -g3 -D LOCALE=$(LOCALE)
 ASMFLAGS	:=	$(CFLAGS) -S
 MAKEFLAGS	:=	--no-print-directory
 RMFLAGS		:=	-rf

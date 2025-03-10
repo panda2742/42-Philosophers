@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_table.c                                      :+:      :+:    :+:   */
+/*   ft_atoui.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/10 16:04:23 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 16:18:16 by ehosta           ###   ########.fr       */
+/*   Created: 2025/03/10 14:48:11 by ehosta            #+#    #+#             */
+/*   Updated: 2025/03/10 14:48:35 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	clear_table(t_philo_vars *pvars)
+unsigned int	ft_atoui(const char *nptr, int *exit_code)
 {
-	unsigned int	i;
+	int	res;
 
-	i = -1;
-	while (++i < pvars->nb_philo)
+	res = 0;
+	while (*nptr && *nptr < 32)
+		nptr++;
+	while (*nptr)
 	{
-		pthread_mutex_destroy(&pvars->forks[i].mutex);
-		if (pvars->philos[i].roman)
-			free(pvars->philos[i].roman);
+		if (*nptr < '0' || *nptr > '9')
+		{
+			*exit_code = EXIT_FAILURE;
+			break ;
+		}
+		if ((res * 10 + *nptr - '0') / 10 != res)
+		{
+			*exit_code = EXIT_FAILURE;
+			break ;
+		}
+		res = res * 10 + *nptr - '0';
+		nptr++;
 	}
+	return (res);
 }
