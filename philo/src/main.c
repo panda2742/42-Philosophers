@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 16:18:35 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/11 10:26:32 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,18 @@ int	main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 	{
-		printf(RED "Error.\n  4 or 5 arguments are expected:\n");
-		printf("  ./philo nb_philo t_die t_eat t_sleep [nb_meals]\n" RESET);
+		printf(RED "Error.\n4 or 5 arguments are expected:\n");
+		printf("./philo nb_philo t_die t_eat t_sleep [nb_meals]\n" RESET);
 		return (EXIT_FAILURE);
 	}
-	
 	create_table(&pvars, argc, argv);
-	start_simulation(&pvars);
-	clear_table(&pvars);
-	
 	if (pvars.exit_status == EXIT_FAILURE)
 	{
-		printf(RED "Error.\n  Errors occured.\n" RESET);
+		printf(RED "Error.\nCheck if the entry is correct and retry. ");
+		printf("Unsigned integers are expected.\n" RESET);
 		return (EXIT_FAILURE);
 	}
+	start_simulation(&pvars);
+	clear_table(&pvars);
 	return (pvars.exit_status);
 }

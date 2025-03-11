@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:34 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 17:07:29 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/11 09:34:41 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_philo_vars
 	t_mutexval		write;
 }					t_philo_vars;
 
-t_philo			*create_table(t_philo_vars *pvars, int argc, char **argv);
+void			create_table(t_philo_vars *pvars, int argc, char **argv);
 void			start_simulation(t_philo_vars *pvars);
 void			*routine(t_routine_args *args);
 void			display_state(t_routine_args *args);

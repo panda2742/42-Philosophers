@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:04:23 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 16:18:16 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/11 09:36:21 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,7 @@ void	clear_table(t_philo_vars *pvars)
 		if (pvars->philos[i].roman)
 			free(pvars->philos[i].roman);
 	}
+	free(pvars->philos);
+	free(pvars->forks);
+	free(pvars->args);
 }

@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 16:43:11 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 17:09:27 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/11 10:14:13 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static size_t	_name_owners(t_philo_vars *pvars, t_philo *ref, char *name)
 	i = -1;
 	while (++i < pvars->nb_philo)
 	{
+		if (!pvars->philos->name)
+			continue ;
 		if (&pvars->philos[i] == ref)
 			continue ;
 		if (pvars->philos[i].name == name)

@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:33:36 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 17:10:29 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/11 10:27:31 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,5 @@ static char	*_get_color(t_routine_args *args)
 		return (SLEEPING_COLOR);
 	if (args->philo->state == DYING)
 		return (DEAD_COLOR);
-	return "";
+	return ("");
 }

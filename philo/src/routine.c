@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:49:31 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 20:14:59 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/11 10:28:36 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	*routine(t_routine_args *args)
 
 	philo = args->philo;
 	philo->state = THINKING;
+	gettimeofday(&args->philo->last_meal_ts, NULL);
 	gettimeofday(&philo->state_since, NULL);
+	gettimeofday(&args->ts, NULL);
 	display_state(args);
 	while (!_everyone_ate(args))
 	{
@@ -38,7 +40,6 @@ void	*routine(t_routine_args *args)
 			philo_sleeps(args);
 		usleep(500);
 	}
-	pthread_detach(philo->thread);
 	return (NULL);
 }
 
@@ -50,7 +51,7 @@ static t_bool	_everyone_ate(t_routine_args *args)
 		return (0);
 	i = -1;
 	while (++i < args->pvars->nb_philo)
-	{	
+	{
 		pthread_mutex_lock(&args->pvars->philos[i].meals.mutex);
 		if ((unsigned int)args->pvars->philos[i].meals.val
 			< args->pvars->nb_meals)

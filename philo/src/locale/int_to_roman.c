@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 10:44:45 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 16:45:54 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/11 10:27:18 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ char	*int_to_roman(size_t nb)
 	len = _roman_size(vals, chars, nb);
 	res = malloc(sizeof(char) * (len + 2));
 	if (!res)
-		return (malloc(sizeof(char)));
+		return (NULL);
 	res[0] = ' ';
-	res[len] = 0;
+	res[len + 1] = 0;
 	_put_roman(chars, vals, nb, res + 1);
 	return (res);
 }
@@ -73,7 +73,8 @@ static void	_put_roman(char *chars[13], int vals[13], int nb, char *res)
 		while (div--)
 		{
 			res[k++] = chars[i][0];
-			if (chars[i][1]) res[k++] = chars[i][1];
+			if (chars[i][1])
+				res[k++] = chars[i][1];
 		}
 		i--;
 	}

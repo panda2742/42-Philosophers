@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/10 20:26:56 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/11 10:26:17 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ $(DIRS):
 
 .PHONY: norm
 norm:
-	norminette $(SRC_DIR) include/ libft/
+	norminette $(SRC_DIR) include/
 
 .PHONY: compile
 compile:
@@ -68,6 +68,6 @@ compile:
 
 .PHONY: run
 run: compile
-	./$(NAME) 3 8000 200 200
+	./$(NAME) 3 800 200 200
 
 -include $(DEPS)
