@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 15:49:31 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/10 17:21:34 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/10 20:14:59 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ static t_bool	_everyone_ate(t_routine_args *args);
 void	*routine(t_routine_args *args)
 {
 	t_philo			*philo;
-	t_philo_vars	*pvars;
 
 	philo = args->philo;
-	pvars = args->pvars;
 	philo->state = THINKING;
 	gettimeofday(&philo->state_since, NULL);
 	display_state(args);

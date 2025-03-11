@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/10 17:10:39 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/10 20:26:56 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,14 +23,12 @@ override	SRCS		:=	life/philo_dies life/philo_eats life/philo_sleeps \
 							create_table main routine
 override	SRC			:=	$(addprefix $(SRC_DIR),$(addsuffix .c,$(SRCS)))
 override	OBJ			:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.o,$(SRC))
-override	ASM_OBJ		:=	$(patsubst $(SRC_DIR)%.c,$(BUILD_DIR)%.s,$(SRC))
 
 override	DIRS	:=	$(sort $(dir $(NAME) $(OBJ) $(DEPS)))
 
 LOCALE=0
 
 CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pthread -g3 -D LOCALE=$(LOCALE)
-ASMFLAGS	:=	$(CFLAGS) -S
 MAKEFLAGS	:=	--no-print-directory
 RMFLAGS		:=	-rf
 override	GCC		:=	cc
@@ -44,13 +42,6 @@ $(NAME): $(OBJ) include/philo.h Makefile
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c | $(DIRS)
 	$(CC) $(CFLAGS) -Iinclude/ -c $< -o $@
-
-.PHONY: asm
-asm: $(ASM_OBJ) $(OBJ) philo.h Makefile
-	$(MAKE)
-
-$(BUILD_DIR)%.s: $(SRC_DIR)%.c | $(DIRS)
-	$(CC) $(ASMFLAGS) -c $< -o $@
 
 .PHONY: clean
 clean:
