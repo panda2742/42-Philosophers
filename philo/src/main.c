@@ -6,7 +6,7 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 11:03:18 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/11 10:26:32 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/11 10:58:39 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	main(int argc, char **argv)
 		printf("Unsigned integers are expected.\n" RESET);
 		return (EXIT_FAILURE);
 	}
+	pvars.exit_status = EXIT_SUCCESS;
 	start_simulation(&pvars);
 	clear_table(&pvars);
+	if (pvars.a_philo_is_dead.val == 1)
+		pvars.exit_status = EXIT_FAILURE;
 	return (pvars.exit_status);
 }

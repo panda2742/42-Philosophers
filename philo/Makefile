@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/11 10:26:17 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/11 10:40:29 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ override	DIRS	:=	$(sort $(dir $(NAME) $(OBJ) $(DEPS)))
 
 LOCALE=0
 
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pthread -g3 -D LOCALE=$(LOCALE)
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pthread -D LOCALE=$(LOCALE)
 MAKEFLAGS	:=	--no-print-directory
 RMFLAGS		:=	-rf
 override	GCC		:=	cc
