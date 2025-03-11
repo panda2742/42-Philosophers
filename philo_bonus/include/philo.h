@@ -6,16 +6,17 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:09:15 by ehosta            #+#    #+#             */
-/*   Updated: 2025/03/11 11:16:05 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:45:44 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_BONUS_H
-# define PHILO_BONUS_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <semaphore.h>
 
 # define RED "\x1b[31m"
 # define GREEN "\x1b[32m"
@@ -53,6 +54,12 @@ typedef struct s_philo_vars
 	unsigned int	nb_meals;
 	t_bool			infinite_meals;
 }					t_philo_vars;
+
+typedef struct s_philo_proc
+{
+	t_philo_vars	*pvars;
+	int				philo_id;
+}					t_philo_proc;
 
 void			parsing(t_philo_vars *pvars, int argc, char **argv);
 unsigned int	ft_atoui(const char *nptr, int *exit_code);
