@@ -6,7 +6,7 @@
 #    By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 18:04:28 by ehosta            #+#    #+#              #
-#    Updated: 2025/03/11 10:40:29 by ehosta           ###   ########.fr        #
+#    Updated: 2025/03/12 15:06:06 by ehosta           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,10 @@ override	RM		:=	rm
 .PHONY: all
 all:	$(NAME)
 
-$(NAME): $(OBJ) include/philo.h Makefile
+$(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
-$(BUILD_DIR)%.o: $(SRC_DIR)%.c | $(DIRS)
+$(BUILD_DIR)%.o: $(SRC_DIR)%.c include/philo.h Makefile | $(DIRS)
 	$(CC) $(CFLAGS) -Iinclude/ -c $< -o $@
 
 .PHONY: clean
